@@ -1,0 +1,204 @@
+/* ============================================================
+   Connexion.css — Page de connexion Zenselekt
+   ============================================================ */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+/* ── Variables ─────────────────────────────────────────────── */
+:root {
+  --cx-blue:       #003D5C;
+  --cx-turquoise:  #5DABA8;
+  --cx-light:      #7AC4C1;
+  --cx-dark:       #002838;
+  --cx-white:      #ffffff;
+  --cx-gray-input: #e1e5e9;
+  --cx-error:      #dc3545;
+  --cx-success:    #10B981;
+}
+
+/* ── Page wrapper ──────────────────────────────────────────── */
+.cx-page {
+  background-color: var(--cx-blue);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+  padding-top: 80px;
+}
+
+/* ── Top bar ───────────────────────────────────────────────── */
+.cx-topbar {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  padding: 15px 20px;
+  background: var(--cx-white);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1000;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cx-topbar__back {
+  color: var(--cx-blue);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 18px;
+  transition: color 0.3s ease;
+}
+.cx-topbar__back:hover { color: var(--cx-turquoise); }
+
+.cx-topbar__logo img {
+  height: 50px;
+width: auto; 
+}
+
+/* ── Card ──────────────────────────────────────────────────── */
+.cx-card {
+  background: var(--cx-white);
+  padding: 35px;
+  border-radius: 16px;
+  max-width: 420px;
+  width: 95%;
+  text-align: center;
+  color: var(--cx-blue);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  animation: cx-fadeIn 0.5s ease both;
+}
+
+@keyframes cx-fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.cx-card__title {
+  margin-bottom: 20px;
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: var(--cx-blue);
+}
+
+/* ── Alert ─────────────────────────────────────────────────── */
+.cx-alert {
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 14px;
+  text-align: left;
+}
+.cx-alert--error {
+  color: var(--cx-error);
+  background: rgba(220, 53, 69, 0.08);
+  border: 1px solid rgba(220, 53, 69, 0.3);
+}
+
+/* ── Inputs ────────────────────────────────────────────────── */
+.cx-input {
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 12px 14px;
+  font-size: 16px;
+  border: 2px solid var(--cx-gray-input);
+  border-radius: 8px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background: var(--cx-white);
+  color: var(--cx-blue);
+  outline: none;
+  font-family: inherit;
+  display: block;
+}
+.cx-input:focus {
+  border-color: var(--cx-turquoise);
+  box-shadow: 0 0 0 0.2rem rgba(93, 171, 168, 0.25);
+}
+.cx-input::placeholder { color: #aab4be; }
+
+/* ── Password wrapper ──────────────────────────────────────── */
+.cx-input-wrap {
+  position: relative;
+}
+.cx-input-wrap .cx-input {
+  padding-right: 44px;
+}
+.cx-eye {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  /* offset to account for the 15px margin-bottom on .cx-input */
+  transform: translateY(calc(-50% - 7.5px));
+  cursor: pointer;
+  font-size: 18px;
+  color: #666;
+  transition: color 0.3s ease;
+  user-select: none;
+}
+.cx-eye:hover { color: var(--cx-turquoise); }
+
+/* ── Captcha ───────────────────────────────────────────────── */
+.cx-captcha-question {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--cx-blue);
+  margin-bottom: 10px;
+  text-align: left;
+}
+.cx-captcha-feedback {
+  color: var(--cx-error);
+  font-size: 14px;
+  margin-top: -10px;
+  margin-bottom: 15px;
+  text-align: left;
+}
+.cx-captcha-feedback--ok {
+  color: var(--cx-success);
+}
+
+/* ── Submit button ─────────────────────────────────────────── */
+.cx-btn {
+  width: 100%;
+  padding: 12px 20px;
+  margin-top: 8px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--cx-turquoise), var(--cx-light));
+  color: var(--cx-white);
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+.cx-btn:hover {
+  background: linear-gradient(135deg, #4a9a97, #69b5b2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(93, 171, 168, 0.4);
+}
+.cx-btn:active { transform: translateY(0); }
+
+/* ── Links ─────────────────────────────────────────────────── */
+.cx-links {
+  margin-top: 18px;
+  font-size: 0.9rem;
+}
+.cx-links a {
+  color: var(--cx-blue);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+.cx-links a:hover { color: var(--cx-turquoise); }
+
+/* ── Responsive ────────────────────────────────────────────── */
+@media (max-width: 576px) {
+  .cx-card {
+    padding: 25px;
+  }
+  .cx-card__title {
+    font-size: 1.2rem;
+  }
+}

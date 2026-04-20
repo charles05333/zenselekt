@@ -1,0 +1,532 @@
+/* ─────────────────────────────────────────────
+   jobid.css — Zenselekt Job Detail Page
+   ───────────────────────────────────────────── */
+
+:root {
+  --zen-blue:       #0A3D5C;
+  --zen-blue-dark:  #062A40;
+  --zen-blue-light: #3A6D8F;
+  --zen-teal:       #5AADA7;
+  --zen-teal-light: #7BC8C2;
+  --zen-teal-dark:  #3A8B86;
+  --white:          #ffffff;
+  --grey-bg:        #F8F9FA;
+  --text-dark:      #2d3748;
+  --text-muted:     #718096;
+  --border:         #e2e8f0;
+  --danger:         #e53e3e;
+  --danger-bg:      #fed7d7;
+}
+
+/* ── Page shell ─────────────────────────────── */
+.jbid-page {
+  background: var(--grey-bg);
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+  color: var(--text-dark);
+  line-height: 1.6;
+}
+
+/* ── Top bar ────────────────────────────────── */
+.jbid-topbar {
+  position: fixed;
+  top: 0;
+   position: fixed;
+  inset: 0 0 auto 0;
+  height: 70px;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(20px);
+
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+}
+
+.jbid-topbar__back {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--zen-blue);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: color 0.2s;
+}
+
+.jbid-topbar__back:hover {
+  color: var(--zen-teal);
+}
+
+.jbid-topbar__logo {
+  height: 44px; width: auto; 
+}
+
+/* ── Container ──────────────────────────────── */
+.jbid-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 5rem 1rem 3rem;
+}
+
+/* ── Two-column layout ──────────────────────── */
+.jbid-layout {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+/* ── Details (left) ─────────────────────────── */
+.jbid-details {
+  background: var(--white);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  padding: 2.5rem;
+}
+
+/* Header */
+.jbid-header {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+  padding-bottom: 2rem;
+  margin-bottom: 2.5rem;
+  border-bottom: 2px solid var(--grey-bg);
+}
+
+.jbid-logo {
+  width: 90px;
+  height: auto;
+  border-radius: 10px;
+  background: var(--grey-bg);
+  padding: 0.4rem;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+.jbid-header__info {
+  flex: 1;
+}
+
+.jbid-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--zen-blue);
+  line-height: 1.25;
+  margin-bottom: 0.6rem;
+}
+
+.jbid-company,
+.jbid-pub-date {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 0.3rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.jbid-company i,
+.jbid-pub-date i {
+  color: var(--zen-teal);
+}
+
+/* Share */
+.jbid-share {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 1.2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.jbid-share__label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-right: 0.25rem;
+}
+
+.jbid-share__btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s, filter 0.2s;
+  color: var(--white);
+}
+
+.jbid-share__btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(0.9);
+}
+
+.jbid-share__btn--linkedin  { background: #0077b5; }
+.jbid-share__btn--whatsapp  { background: var(--zen-teal); }
+.jbid-share__btn--copy      { background: var(--zen-blue); }
+
+/* Expired alert */
+.jbid-expired-alert {
+  background: var(--danger-bg);
+  color: var(--danger);
+  border-radius: 8px;
+  padding: 0.875rem 1rem;
+  margin-top: 1rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Sections */
+.jbid-section {
+  margin-bottom: 2.5rem;
+}
+
+.jbid-section h2 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--zen-blue);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.jbid-section h2 i {
+  color: var(--zen-teal);
+  font-size: 1.1rem;
+}
+
+.jbid-section__content {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--text-dark);
+}
+
+.jbid-section__content ul {
+  list-style: disc;
+  margin-left: 1.75rem;
+  margin-top: 0.75rem;
+}
+
+.jbid-section__content li {
+  margin-bottom: 0.6rem;
+}
+
+.jbid-section__content p {
+  margin-bottom: 0.875rem;
+}
+
+/* ── Sidebar ────────────────────────────────── */
+.jbid-sidebar {
+  position: sticky;
+  top: 5rem;
+}
+
+.jbid-sidebar__card {
+  background: var(--white);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  padding: 1.75rem;
+}
+
+/* Deadline pill */
+.jbid-deadline {
+  background: var(--zen-teal);
+  color: var(--white);
+  border-radius: 12px;
+  padding: 1.1rem;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 1.25rem;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.jbid-deadline i {
+  font-size: 1.1rem;
+}
+
+.jbid-deadline--expired {
+  background: var(--danger);
+}
+
+/* Apply button */
+.jbid-apply-btn {
+  width: 100%;
+  background: linear-gradient(135deg, var(--zen-teal), var(--zen-teal-light));
+  color: var(--white);
+  border: none;
+  padding: 1.1rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  transition: all 0.25s;
+  margin-bottom: 1.5rem;
+}
+
+.jbid-apply-btn:hover {
+  background: linear-gradient(135deg, var(--zen-blue), var(--zen-blue-light));
+  transform: translateY(-2px);
+  color: var(--white);
+}
+
+.jbid-apply-btn--disabled {
+  background: #a0aec0;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Info grid */
+.jbid-info h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--zen-blue);
+  margin-bottom: 1rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.jbid-info h3 i {
+  color: var(--zen-teal);
+}
+
+.jbid-info__grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.jbid-info__item {
+  background: var(--grey-bg);
+  border-radius: 10px;
+  padding: 1rem;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.jbid-info__item:hover {
+  background: rgba(90, 173, 167, 0.1);
+  transform: translateY(-1px);
+}
+
+.jbid-info__label {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.3rem;
+}
+
+.jbid-info__label i {
+  color: var(--zen-teal);
+  width: 14px;
+}
+
+.jbid-info__value {
+  font-size: 0.97rem;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+/* ── Error state ────────────────────────────── */
+.jbid-error {
+  background: var(--white);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  padding: 3.5rem 2rem;
+  text-align: center;
+  max-width: 480px;
+  margin: 3rem auto;
+}
+
+.jbid-error i {
+  font-size: 3.5rem;
+  color: var(--danger);
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.jbid-error h2 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--danger);
+  margin-bottom: 0.75rem;
+}
+
+.jbid-error p {
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+
+.jbid-error__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--zen-blue);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.7rem 1.4rem;
+  border: 2px solid var(--zen-blue);
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.jbid-error__back:hover {
+  background: var(--zen-blue);
+  color: var(--white);
+}
+
+/* ── Skeleton loading ───────────────────────── */
+.jbid-skeleton {
+  background: var(--white);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  padding: 2.5rem;
+  animation: skeleton-pulse 1.4s ease-in-out infinite;
+}
+
+.jbid-skeleton__title {
+  height: 2.25rem;
+  background: var(--border);
+  border-radius: 8px;
+  margin-bottom: 1.25rem;
+  width: 65%;
+}
+
+.jbid-skeleton__line {
+  height: 1rem;
+  background: var(--border);
+  border-radius: 6px;
+  margin-bottom: 0.75rem;
+}
+
+.jbid-skeleton__line--short {
+  width: 40%;
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.45; }
+}
+
+/* ── Back to top button ─────────────────────── */
+.jbid-back-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--zen-teal);
+  color: var(--white);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.3s;
+  z-index: 99;
+}
+
+.jbid-back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.jbid-back-to-top:hover {
+  background: var(--zen-blue);
+  transform: translateY(-2px);
+}
+
+/* ── Toast ──────────────────────────────────── */
+.jbid-toast {
+  position: fixed;
+  top: 1.25rem;
+  right: 1.25rem;
+  background: var(--zen-teal);
+  color: var(--white);
+  padding: 0.875rem 1.4rem;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  z-index: 9999;
+  transform: translateX(140%);
+  transition: transform 0.3s ease;
+}
+
+.jbid-toast.show {
+  transform: translateX(0);
+}
+
+/* ── Responsive ─────────────────────────────── */
+@media (max-width: 1024px) {
+  .jbid-layout {
+    grid-template-columns: 1fr;
+  }
+  .jbid-sidebar {
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .jbid-container {
+    padding: 4.5rem 0.875rem 2rem;
+  }
+  .jbid-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .jbid-share {
+    justify-content: center;
+  }
+  .jbid-share__label {
+    display: none;
+  }
+  .jbid-title {
+    font-size: 1.55rem;
+  }
+  .jbid-details,
+  .jbid-sidebar__card {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .jbid-title {
+    font-size: 1.3rem;
+  }
+  .jbid-section h2 {
+    font-size: 1.2rem;
+  }
+}
