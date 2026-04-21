@@ -134,7 +134,7 @@ export default function JobsID() {
             titre: "Responsable Ressources Humaines",
             entreprise: "Groupe Bolloré",
             Date_pub: "2025-03-20",
-            Date_lim_can: "2025-05-31",
+            Date_lim_can: "2026-08-31",
             exp: "5 ans",
             quali: "Master / MBA",
             genre: "Femme",
@@ -192,7 +192,7 @@ export default function JobsID() {
   }, [id]);
 
   // ✅ BONUS : offreUrl pointe vers la route React (pas vers JobsID.php)
-  const offreUrl    = `https://zenselekt.com/jobs/${id}`;
+  const offreUrl    = `https://app.zenselekt.com/jobs/${id}`;
   const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(offreUrl)}`;
   const whatsappUrl = job
     ? `https://wa.me/?text=${encodeURIComponent(
@@ -313,7 +313,7 @@ export default function JobsID() {
             {/* Description */}
             <section className="jbid-section">
               <h2>
-                <i className="fas fa-briefcase" aria-hidden="true" /> Description de l'offre
+                 Description de l'offre
               </h2>
               <div
                 className="jbid-section__content"
@@ -324,7 +324,7 @@ export default function JobsID() {
             {/* Profil */}
             <section className="jbid-section">
               <h2>
-                <i className="fas fa-user-check" aria-hidden="true" /> Profil recherché
+                Profil recherché
               </h2>
               <div
                 className="jbid-section__content"

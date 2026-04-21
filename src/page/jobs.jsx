@@ -84,7 +84,7 @@ function JobCard({ job, index }) {
   const navigate = useNavigate();
 
   // URL canonique pour le partage (lien public)
-  const offreUrl    = `https://zenselekt.com/jobs/${job.id}`;
+  const offreUrl    = `https://app.zenselekt.com/jobs/${job.id}`;
   const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(offreUrl)}`;
   const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(
     "Découvrez cette offre d'emploi : " + job.titre + " - " + offreUrl
@@ -293,7 +293,7 @@ export default function Jobs() {
           titre: "Responsable Ressources Humaines",
           entreprise: "Groupe Bolloré",
           Date_pub: "2025-03-20",
-          Date_lim_can: "2025-05-31",
+          Date_lim_can: "2026-08-31",
           exp: "5ans",
           quali: "Master",
           genre: "femme",

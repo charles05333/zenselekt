@@ -9,6 +9,7 @@ import Inscription from "./auth/inscription.jsx";
 import InscriptionSpontanee from "./auth/inscription-spontanee.jsx";
 import Jobs from "./page/Jobs.jsx";
 import JobsID from "./page/JobsID.jsx";
+import Dashboard from "./page/Dashboard.jsx";  // ← ajouté
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -20,6 +21,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/inscription-spontanee" element={<InscriptionSpontanee />} />
         <Route path="/jobs" element={<Jobs />} />
         <Route path="/jobs/:id" element={<JobsID />} />
+        <Route path="/dashbord" element={<Dashboard />} />  {/* ← ajouté */}
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
