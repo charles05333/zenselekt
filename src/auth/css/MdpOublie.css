@@ -1,0 +1,77 @@
+/* ============================================================
+   MdpOublie.css — Styles spécifiques à la page "Mot de passe oublié"
+   Zenselekt
+   Dépend de Connexion.css (variables et classes cx-* de base)
+   ============================================================ */
+
+/* ── Description intro ─────────────────────────────────────── */
+.mdp-desc {
+  font-size: 0.93rem;
+  color: #4a5568;
+  margin-bottom: 20px;
+  line-height: 1.55;
+  text-align: left;
+}
+
+/* ── Icône de confirmation (cercle checkmark) ──────────────── */
+.mdp-confirm-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(16, 185, 129, 0.1);
+  border: 2px solid var(--cx-success);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  font-size: 28px;
+  color: var(--cx-success);
+  animation: mdp-popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+@keyframes mdp-popIn {
+  from { opacity: 0; transform: scale(0.5); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ── Texte de confirmation principal ───────────────────────── */
+.mdp-confirm-text {
+  font-size: 0.93rem;
+  color: #4a5568;
+  line-height: 1.6;
+  margin-bottom: 22px;
+}
+
+/* ── Texte secondaire (conseil spam) ───────────────────────── */
+.mdp-confirm-hint {
+  font-size: 0.85rem;
+  color: #718096;
+  margin-bottom: 22px;
+  line-height: 1.5;
+}
+
+/* ── Bouton désactivé pendant le chargement ────────────────── */
+.cx-btn:disabled {
+  opacity: 0.75;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ── Description intro ─────────────────────────────────────── */
+.mdp-desc {
+  font-size: 0.93rem;
+  color: #4a5568;
+  margin-bottom: 20px;
+  line-height: 1.55;
+  text-align: left;
+}
+ 
+/* ── Bouton désactivé pendant le chargement ────────────────── */
+.cx-btn:disabled {
+  opacity: 0.75;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+ 

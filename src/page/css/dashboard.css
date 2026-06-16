@@ -564,3 +564,90 @@
   font-size: 18px;
   flex-shrink: 0;
 }
+
+/* ── Modal déconnexion ── */
+.db-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.db-modal {
+  background: var(--db-white);
+  border-radius: var(--db-radius-lg);
+  padding: 32px 28px;
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+}
+
+.db-modal-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #fcebeb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #a32d2d;
+  flex-shrink: 0;
+}
+
+.db-modal h3 {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--db-gray-900);
+  margin: 0;
+}
+
+.db-modal p {
+  font-size: 14px;
+  color: var(--db-gray-500);
+  margin: 0;
+}
+
+.db-modal-btns {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+  width: 100%;
+}
+
+.db-modal-btns button {
+  flex: 1;
+  padding: 9px 16px;
+  border-radius: var(--db-radius-sm);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: all var(--db-transition);
+}
+
+.ins-btn--ghost {
+  background: var(--db-gray-100);
+  color: var(--db-gray-900);
+  border: 1px solid var(--db-gray-200) !important;
+}
+
+.ins-btn--ghost:hover {
+  background: var(--db-gray-200);
+}
+
+.ins-btn--danger {
+  background: #a32d2d;
+  color: #fff;
+}
+
+.ins-btn--danger:hover {
+  background: #8a2020;
+}

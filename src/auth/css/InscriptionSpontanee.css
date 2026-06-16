@@ -28,7 +28,10 @@
   font-family: "Plus Jakarta Sans", sans-serif;
   color: var(--sp-text);
 }
-
+.ins-card__subtitle
+{
+  color:white;
+}
 /* ── Topbar ────────────────────────────────────────────────── */
 .sp-topbar {
   position: fixed; top: 0; left: 0; width: 100%;

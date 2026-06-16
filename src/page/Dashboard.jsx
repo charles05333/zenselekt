@@ -1,22 +1,11 @@
-import { useState, useEffect, useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useState, useEffect, useCallback } from "react";
+import { Link } from "react-router-dom";
+import Menu from "./Menu";
+import { useSessionGuard } from "../auth/useSessionGuard.jsx";
 import "./css/dashboard.css";
-import zenImg from "../assets/img/zen.png";
 
-const SESSION = {
-  prenoms: "Jean",
-  nom: "Dupont",
-  email: "jean.dupont@example.com",
-};
-
-const MOCK_CANDIDATURES = [
-  { id: 1, titre: "Développeur Full Stack",  Date_pub: "2025-03-10", statut: "entretien_valide"  },
-  { id: 2, titre: "Chef de Projet Digital",  Date_pub: "2025-02-28", statut: "en_evaluation"     },
-  { id: 3, titre: "Analyste Business",       Date_pub: "2025-02-14", statut: "retenu_entretien"  },
-  { id: 4, titre: "Responsable RH",          Date_pub: "2025-01-30", statut: "non_retenu"        },
-  { id: 5, titre: "UX Designer Senior",      Date_pub: "2025-01-15", statut: "reserve"           },
-  { id: 6, titre: "Data Engineer",           Date_pub: "2025-01-05", statut: "recrute"           },
-];
+// ─── Constants ────────────────────────────────────────────────────────────────
+const API_BASE = import.meta.env.VITE_API_BASE || '';
 
 const CARD_COLORS = [
   { bg: "#eeedfe", stroke: "#534ab7", icon: "rocket"    },
@@ -28,20 +17,27 @@ const CARD_COLORS = [
 ];
 
 const STATUT_LABELS = {
-  en_evaluation:    { label: "En cours d'évaluation",  cls: "badge-evaluation"    },
-  retenu_entretien: { label: "Retenu pour entretien",  cls: "badge-entretien"     },
-  entretien_valide: { label: "Entretien validé",       cls: "badge-valide"        },
-  non_retenu:       { label: "Non retenu",             cls: "badge-non-retenu"    },
-  reserve:          { label: "Mis en réserve",         cls: "badge-reserve"       },
-  recrute:          { label: "Recruté",                cls: "badge-recrute"       },
+    en_evaluation:    { label: "En cours d'évaluation", cls: "badge-evaluation" },
+    retenu_entretien: { label: "Retenu pour entretien",  cls: "badge-entretien"  },
+    entretien_valide: { label: "Entretien validé",        cls: "badge-valide"     },
+    non_retenu_cv:    { label: "CV non retenu",           cls: "badge-non-retenu" },
+    non_retenu:       { label: "Non retenu",              cls: "badge-non-retenu" },
+    reserve:          { label: "Mis en réserve",          cls: "badge-reserve"    },
+    recrute:          { label: "Recruté",                 cls: "badge-recrute"    },
 };
 
+// ─── Helpers ──────────────────────────────────────────────────────────────────
 function formatDate(dateStr) {
+  if (!dateStr) return "—";
   return new Date(dateStr).toLocaleDateString("fr-FR", {
     day: "2-digit", month: "short", year: "numeric",
   });
 }
 
+// Helper : regroupe les deux variantes de refus
+const isNonRetenu = (statut) => statut === "non_retenu" || statut === "non_retenu_cv";
+
+// ─── SVG Icons ────────────────────────────────────────────────────────────────
 function IconSVG({ name, stroke }) {
   const s = { fill: "none", stroke, strokeWidth: "1.8", strokeLinecap: "round", strokeLinejoin: "round" };
   if (name === "briefcase") return (
@@ -85,237 +81,290 @@ function IconSVG({ name, stroke }) {
   return null;
 }
 
-function SideIcon({ name }) {
+function InlineIcon({ name }) {
   const s = { fill: "none", strokeWidth: "1.8", strokeLinecap: "round", strokeLinejoin: "round" };
-  if (name === "grid") return (
+  if (name === "briefcase") return (
     <svg viewBox="0 0 24 24" style={s}>
-      <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
-      <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+      <rect x="2" y="7" width="20" height="14" rx="2"/>
+      <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
     </svg>
   );
-  if (name === "user") return (
+  if (name === "calendar") return (
     <svg viewBox="0 0 24 24" style={s}>
-      <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+      <line x1="16" y1="2" x2="16" y2="6"/>
+      <line x1="8"  y1="2" x2="8"  y2="6"/>
+      <line x1="3"  y1="10" x2="21" y2="10"/>
     </svg>
   );
-  if (name === "file") return (
+  if (name === "alert") return (
     <svg viewBox="0 0 24 24" style={s}>
-      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-      <polyline points="14 2 14 8 20 8"/>
+      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+      <line x1="12" y1="9" x2="12" y2="13"/>
+      <line x1="12" y1="17" x2="12.01" y2="17"/>
     </svg>
   );
-  if (name === "search") return (
+  if (name === "refresh") return (
     <svg viewBox="0 0 24 24" style={s}>
-      <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-    </svg>
-  );
-  if (name === "logout") return (
-    <svg viewBox="0 0 24 24" style={s}>
-      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-      <polyline points="16 17 21 12 16 7"/>
-      <line x1="21" y1="12" x2="9" y2="12"/>
+      <polyline points="23 4 23 10 17 10"/>
+      <polyline points="1 20 1 14 7 14"/>
+      <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
     </svg>
   );
   return null;
 }
 
+// ─── Skeleton loader ──────────────────────────────────────────────────────────
+function SkeletonCard() {
+  return (
+    <div className="db-card" style={{ opacity: 1 }}>
+      <div style={{ width: 48, height: 48, borderRadius: 12, background: "#e2e8f0", marginBottom: 12 }} />
+      <div style={{ height: 16, background: "#e2e8f0", borderRadius: 6, marginBottom: 8, width: "80%" }} />
+      <div style={{ height: 13, background: "#e2e8f0", borderRadius: 6, marginBottom: 16, width: "60%" }} />
+      <div style={{ height: 24, background: "#e2e8f0", borderRadius: 20, width: "40%" }} />
+    </div>
+  );
+}
+
+// ─── Modal de confirmation de déconnexion ─────────────────────────────────────
+function LogoutModal({ onConfirm, onCancel }) {
+  return (
+    <div className="db-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="logout-title">
+      <div className="db-modal">
+        <div className="db-modal-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+            <polyline points="16 17 21 12 16 7"/>
+            <line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+        </div>
+        <h3 id="logout-title">Se déconnecter ?</h3>
+        <p>Vous allez être redirigé vers la page de connexion.</p>
+        <div className="db-modal-btns">
+          <button className="ins-btn ins-btn--ghost" onClick={onCancel}>Annuler</button>
+          <button className="ins-btn ins-btn--danger" onClick={onConfirm}>Se déconnecter</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Dashboard principal ──────────────────────────────────────────────────────
 export default function Dashboard() {
-  const [cards, setCards]         = useState([]);
-  const [visible, setVisible]     = useState([]);
-  const [notifOpen, setNotifOpen] = useState(false);
-  const notifRef                  = useRef(null);
-  const location                  = useLocation();
+  // ── Garde de session ──────────────────────────────────────────────────────
+  const { session, loading, logout } = useSessionGuard({
+    redirectTo:    "/connexion",
+    checkInterval: 5 * 60 * 1000,
+  });
 
-  useEffect(() => {
-    setTimeout(() => setCards(MOCK_CANDIDATURES), 200);
-  }, []);
+  // ── Candidatures ──────────────────────────────────────────────────────────
+  // allCandidatures : liste complète pour les stats (pas limitée à 6)
+  const [allCandidatures,  setAllCandidatures]  = useState([]);
+  // candidatures : les 6 premières pour l'affichage des cartes
+  const [candidatures,     setCandidatures]     = useState([]);
+  const [loadingCands,     setLoadingCands]     = useState(true);
+  const [errorCands,       setErrorCands]       = useState("");
+  const [visible,          setVisible]          = useState([]);
 
-  useEffect(() => {
-    cards.forEach((_, i) => {
-      setTimeout(() => setVisible((prev) => [...prev, i]), i * 100);
-    });
-  }, [cards]);
+  // ── Déconnexion ───────────────────────────────────────────────────────────
+  const [showLogout, setShowLogout] = useState(false);
 
-  useEffect(() => {
-    function handleClickOutside(e) {
-      if (notifRef.current && !notifRef.current.contains(e.target)) {
-        setNotifOpen(false);
+  // ── Fetch candidatures ────────────────────────────────────────────────────
+  const fetchCandidatures = useCallback(async () => {
+    setLoadingCands(true);
+    setErrorCands("");
+    try {
+      const token = localStorage.getItem("token") || "";
+
+      const res = await fetch(`${API_BASE}/candidatures.php`, {
+        method:      "GET",
+        credentials: "include",
+        headers: {
+          Authorization:      `Bearer ${token}`,
+          Accept:             "application/json",
+          "X-Requested-With": "XMLHttpRequest",
+        },
+      });
+
+      if (res.status === 401) { logout(); return; }
+      if (res.status === 403) { logout(); return; }
+
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        setErrorCands(errData.message || "Impossible de charger vos candidatures.");
+        return;
       }
+
+      const data = await res.json();
+      if (!data.success) {
+        setErrorCands(data.message || "Une erreur est survenue.");
+        return;
+      }
+
+      const full = data.candidatures || [];
+      // Stats sur la liste complète, cartes sur les 6 premières
+      setAllCandidatures(full);
+      const list = full.slice(0, 6);
+      setCandidatures(list);
+
+      setVisible([]);
+      list.forEach((_, i) => {
+        setTimeout(() => setVisible(prev => [...prev, i]), i * 80);
+      });
+
+    } catch (err) {
+      console.error("[Dashboard] fetch candidatures error:", err);
+      setErrorCands("Erreur réseau. Vérifiez votre connexion.");
+    } finally {
+      setLoadingCands(false);
     }
-    if (notifOpen) document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [notifOpen]);
+  }, [logout]);
 
-  const initials = `${SESSION.prenoms[0]}${SESSION.nom[0]}`;
+  useEffect(() => {
+    if (loading || !session) return;
+    fetchCandidatures();
+  }, [loading, session, fetchCandidatures]);
 
+  // ── Statistiques (calculées sur la liste complète) ────────────────────────
   const stats = [
-    { n: MOCK_CANDIDATURES.length,                                                        label: "Candidatures"                         },
-    { n: MOCK_CANDIDATURES.filter(c => c.statut === "en_evaluation").length,              label: "En évaluation"                        },
-    { n: MOCK_CANDIDATURES.filter(c => c.statut === "retenu_entretien" || c.statut === "entretien_valide").length, label: "Entretiens" },
-    { n: MOCK_CANDIDATURES.filter(c => c.statut === "recrute").length,                    label: "Recrutés"                             },
+    {
+      n:     allCandidatures.length,
+      label: "Candidatures",
+    },
+    {
+      n:     allCandidatures.filter(c => c.statut === "en_evaluation").length,
+      label: "En évaluation",
+    },
+    {
+      n:     allCandidatures.filter(c => c.statut === "retenu_entretien" || c.statut === "entretien_valide").length,
+      label: "Entretiens",
+    },
+    {
+      n:     allCandidatures.filter(c => c.statut === "recrute").length,
+      label: "Recrutés",
+    },
+    // ← AJOUT : regroupe non_retenu + non_retenu_cv
+    {
+      n:     allCandidatures.filter(c => isNonRetenu(c.statut)).length,
+      label: "Non retenus",
+    },
   ];
 
+  const displayName = session?.prenoms || session?.prenom || session?.nom || "vous";
+
+  // ── Écran de chargement session ───────────────────────────────────────────
+  if (loading) {
+    return (
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+        <div className="ins-spinner" aria-label="Chargement…" />
+      </div>
+    );
+  }
+
   return (
-    <div className="db-wrapper">
+    <>
+      {showLogout && (
+        <LogoutModal
+          onConfirm={logout}
+          onCancel={() => setShowLogout(false)}
+        />
+      )}
 
-      {/* ── Topbar ── */}
-      <header className="db-topbar">
-        <Link to="/dashbord" className="db-topbar-logo">
-          <img src={zenImg} alt="Zenselekt" />
-        </Link>
+      <Menu session={session} onLogout={() => setShowLogout(true)}>
 
-        <nav className="db-topbar-nav">
-          <Link to="/dashbord" className={`db-tn${location.pathname === "/dashbord" ? " db-tn--active" : ""}`}>
-            Accueil
-          </Link>
-          <Link to="/jobs" className={`db-tn${location.pathname === "/jobs" ? " db-tn--active" : ""}`}>
-            Offres d'emploi
-          </Link>
-        </nav>
-
-        <div className="db-topbar-right">
-
-          {/* Icône notification */}
-          <div className="db-notif-wrapper" ref={notifRef}>
-            <button className="db-notif-btn" onClick={() => setNotifOpen(!notifOpen)}>
-              <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.65)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width="20" height="20">
-                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
-                <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
-              </svg>
-              <span className="db-notif-dot"></span>
-            </button>
-
-            {notifOpen && (
-              <div className="db-notif-panel">
-                <div className="db-notif-item">
-                  <span className="db-notif-ico">👋</span>
-                  <span>Bonjour {SESSION.prenoms} !</span>
-                </div>
-              </div>
-            )}
-          </div>
-
-          <span className="db-topbar-name">{SESSION.prenoms} {SESSION.nom}</span>
-          <div className="db-avatar">{initials}</div>
+        {/* ── Greeting ── */}
+        <div className="db-greeting">
+          <p>Voici un aperçu de vos candidatures récentes</p>
         </div>
-      </header>
 
-      {/* ── Body ── */}
-      <div className="db-body">
+        {/* ── Stats ── */}
+        <div className="db-stats">
+          {stats.map((s, i) => (
+            <div key={i} className="db-stat">
+              <span className="db-stat-n">
+                {loadingCands ? "…" : s.n}
+              </span>
+              <span className="db-stat-l">{s.label}</span>
+            </div>
+          ))}
+        </div>
 
-        {/* ── Sidebar icônes ── */}
-        <aside className="db-sidebar">
-          <div className="db-sidebar-top">
-            <Link to="/dashbord"     className={`db-si${location.pathname === "/dashbord"     ? " db-si--active" : ""}`}>
-              <SideIcon name="grid"   /><span className="db-si-tip">Tableau de bord</span>
-            </Link>
-            <Link to="/profil"       className={`db-si${location.pathname === "/profil"       ? " db-si--active" : ""}`}>
-              <SideIcon name="user"   /><span className="db-si-tip">Mon profil</span>
-            </Link>
-            <Link to="/candidatures" className={`db-si${location.pathname === "/candidatures" ? " db-si--active" : ""}`}>
-              <SideIcon name="file"   /><span className="db-si-tip">Candidatures</span>
-            </Link>
-            <Link to="/jobs"         className={`db-si${location.pathname === "/jobs"         ? " db-si--active" : ""}`}>
-              <SideIcon name="search" /><span className="db-si-tip">Offres d'emploi</span>
-            </Link>
-          </div>
-          <div className="db-sidebar-bottom">
-            <Link to="/connexion" className="db-si">
-              <SideIcon name="logout" /><span className="db-si-tip">Déconnexion</span>
-            </Link>
-          </div>
-        </aside>
+        {/* ── Section candidatures récentes ── */}
+        <div className="db-section-head">
+          <h3>Récentes candidatures</h3>
+          <Link to="/candidatures" className="db-see-all">Voir tout</Link>
+        </div>
 
-        {/* ── Contenu principal ── */}
-        <main className="db-main">
-
-          {/* Greeting */}
-          <div className="db-greeting">
-            <h2>Bonjour, {SESSION.prenoms} 👋</h2>
-            <p>Voici un aperçu de vos candidatures récentes</p>
-          </div>
-
-          {/* Stats */}
-          <div className="db-stats">
-            {stats.map((s, i) => (
-              <div key={i} className="db-stat">
-                <span className="db-stat-n">{s.n}</span>
-                <span className="db-stat-l">{s.label}</span>
-              </div>
-            ))}
-          </div>
-
-          {/* Section candidatures */}
-          <div className="db-section-head">
-            <h3>Récentes candidatures</h3>
-            <Link to="/candidatures" className="db-see-all">Voir tout</Link>
-          </div>
-
+        {/* ── Skeleton ── */}
+        {loadingCands && (
           <div className="db-grid">
-            {cards.length === 0 ? (
+            {Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)}
+          </div>
+        )}
+
+        {/* ── Erreur ── */}
+        {!loadingCands && errorCands && (
+          <div className="db-empty" style={{ padding: "32px 0", textAlign: "center" }}>
+            <div style={{ fontSize: 36, marginBottom: 10, color: "#e53935" }}>
+              <InlineIcon name="alert" />
+            </div>
+            <p style={{ color: "#e53935", marginBottom: 14 }}>{errorCands}</p>
+            <button className="db-empty-cta" onClick={fetchCandidatures}>
+              <InlineIcon name="refresh" /> Réessayer
+            </button>
+          </div>
+        )}
+
+        {/* ── Grille de cartes ── */}
+        {!loadingCands && !errorCands && (
+          <div className="db-grid">
+            {candidatures.length === 0 ? (
               <div className="db-empty">
                 <p>Aucune candidature pour le moment</p>
-                <Link to="/jobs" className="db-empty-cta">Explorer les offres</Link>
+                <Link to="/jobs-auth" className="db-empty-cta">Explorer les offres</Link>
               </div>
             ) : (
-              cards.map((row, index) => {
+              candidatures.map((row, index) => {
                 const color  = CARD_COLORS[index % CARD_COLORS.length];
                 const statut = STATUT_LABELS[row.statut] || STATUT_LABELS.en_evaluation;
                 return (
                   <div
                     key={row.id}
                     className={`db-card${visible.includes(index) ? " db-card--visible" : ""}`}
+                    style={{ gap: 0, padding: "18px 18px 16px" }}
                   >
-                    <div className="db-card-ico" style={{ background: color.bg }}>
-                      <IconSVG name={color.icon} stroke={color.stroke} />
+                    <h4 className="db-card-title" style={{ margin: "0 0 4px 0", fontSize: 14, fontWeight: 600, lineHeight: 1.4 }}>
+                      {row.titre}
+                    </h4>
+                    <div style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 12, color: "#6b7280", marginBottom: 12 }}>
+                      <svg viewBox="0 0 24 24" style={{ width: 12, height: 12, fill: "none", stroke: "#9ca3af", strokeWidth: 1.8, strokeLinecap: "round", strokeLinejoin: "round", flexShrink: 0 }}>
+                        <rect x="2" y="7" width="20" height="14" rx="2"/>
+                        <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+                      </svg>
+                      <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{row.entreprise}</span>
                     </div>
-                    <h4 className="db-card-title">{row.titre}</h4>
-                    <div className="db-card-meta">
-                      <span className="db-badge db-badge--co">EMPOWER</span>
+
+                    <div style={{ marginBottom: 10 }}>
                       <span className={`db-badge ${statut.cls}`}>{statut.label}</span>
                     </div>
-                    <span className="db-card-date">{formatDate(row.Date_pub)}</span>
+
+                    <div style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 11, color: "#9ca3af", marginTop: "auto", paddingTop: 4, borderTop: "1px solid #f0f2f5" }}>
+                      <svg viewBox="0 0 24 24" style={{ width: 12, height: 12, fill: "none", stroke: "#9ca3af", strokeWidth: 1.8, strokeLinecap: "round", strokeLinejoin: "round", flexShrink: 0 }}>
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                        <line x1="16" y1="2" x2="16" y2="6"/>
+                        <line x1="8"  y1="2" x2="8"  y2="6"/>
+                        <line x1="3"  y1="10" x2="21" y2="10"/>
+                      </svg>
+                      {formatDate(row.Date_pub)}
+                    </div>
                   </div>
                 );
               })
             )}
           </div>
-        </main>
-      </div>
+        )}
 
-      {/* ── Bottom nav mobile ── */}
-      <nav className="db-bottom-nav">
-        <Link to="/dashbord" className={`db-bn-item${location.pathname === "/dashbord" ? " db-bn-item--active" : ""}`}>
-          <SideIcon name="grid" />
-          <span>Accueil</span>
-        </Link>
-        <Link to="/profil" className={`db-bn-item${location.pathname === "/profil" ? " db-bn-item--active" : ""}`}>
-          <SideIcon name="user" />
-          <span>Profil</span>
-        </Link>
-        <Link to="/candidatures" className={`db-bn-item${location.pathname === "/candidatures" ? " db-bn-item--active" : ""}`}>
-          <SideIcon name="file" />
-          <span>Candidatures</span>
-        </Link>
-        <Link to="/jobs" className={`db-bn-item${location.pathname === "/jobs" ? " db-bn-item--active" : ""}`}>
-          <SideIcon name="search" />
-          <span>Offres</span>
-        </Link>
-      </nav>
-
-      {/* ── Footer ── */}
-      <footer className="db-footer">
-        <div className="container">
-          <p>© 2025 Zenselekt - Tous droits réservés</p>
-          <p>
-            Développé par{" "}
-            <a href="https://empowertaca.com" target="_blank" rel="noreferrer">
-              Empower Talents and Careers
-            </a>
-          </p>
-        </div>
-      </footer>
-
-    </div>
+      </Menu>
+    </>
   );
 }

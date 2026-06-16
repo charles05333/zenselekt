@@ -1,0 +1,993 @@
+/* =====================================================
+   jobs.css — préfixe "jb-"
+   ===================================================== */
+
+/* ── Stats ── */
+.jb-stats {
+  cursor: default;
+}
+
+.jb-stat-pill {
+  transition: border-color var(--db-transition), box-shadow var(--db-transition);
+  border: 1.5px solid var(--db-gray-200);
+}
+
+.jb-stat-pill:hover {
+  border-color: var(--db-teal);
+}
+
+/* ── Toolbar ── */
+.jb-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+/* Recherche */
+.jb-search-wrapper {
+  position: relative;
+  flex: 1;
+  min-width: 200px;
+}
+
+.jb-search-ico {
+  position: absolute;
+  left: 11px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.jb-search-ico svg {
+  width: 15px;
+  height: 15px;
+  stroke: var(--db-gray-500);
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.jb-search {
+  width: 100%;
+  padding: 9px 36px 9px 34px;
+  border: 1.5px solid var(--db-gray-200);
+  border-radius: var(--db-radius-sm);
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--db-gray-900);
+  background: var(--db-white);
+  outline: none;
+  transition: border-color var(--db-transition), box-shadow var(--db-transition);
+}
+
+.jb-search:focus {
+  border-color: var(--db-teal);
+  box-shadow: 0 0 0 3px rgba(29, 158, 117, 0.10);
+}
+
+.jb-search-clear {
+  position: absolute;
+  right: 9px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 2px;
+  color: var(--db-gray-500);
+  transition: color var(--db-transition);
+}
+
+.jb-search-clear:hover { color: var(--db-gray-900); }
+
+.jb-search-clear svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Filtre select */
+.jb-filter-wrapper {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.jb-filter-ico {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.jb-filter-ico svg {
+  width: 14px;
+  height: 14px;
+  stroke: var(--db-gray-500);
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.jb-filter-select {
+  appearance: none;
+  padding: 9px 32px 9px 32px;
+  border: 1.5px solid var(--db-gray-200);
+  border-radius: var(--db-radius-sm);
+  font-size: 13px;
+  font-family: inherit;
+  color: var(--db-gray-900);
+  background: var(--db-white);
+  outline: none;
+  cursor: pointer;
+  transition: border-color var(--db-transition);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}
+
+.jb-filter-select:focus,
+.jb-filter-select:hover {
+  border-color: var(--db-teal);
+}
+
+/* Toggle vue */
+.jb-view-toggle {
+  display: flex;
+  border: 1.5px solid var(--db-gray-200);
+  border-radius: var(--db-radius-sm);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.jb-view-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: var(--db-white);
+  border: none;
+  cursor: pointer;
+  transition: background var(--db-transition);
+}
+
+.jb-view-btn svg {
+  width: 15px;
+  height: 15px;
+  stroke: var(--db-gray-500);
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.jb-view-btn:hover { background: var(--db-gray-100); }
+
+.jb-view-btn--active {
+  background: var(--db-teal-light);
+}
+
+.jb-view-btn--active svg { stroke: var(--db-teal-dark); }
+
+/* Compteur résultats */
+.jb-result-count {
+  font-size: 12px;
+  color: var(--db-gray-500);
+  margin-bottom: 14px;
+  font-weight: 500;
+}
+
+/* ── Grid — 4 cartes par ligne ── */
+.jb-grid {
+  grid-template-columns: repeat(4, 1fr) !important;
+}
+
+/* ── Card enrichie ── */
+.jb-card {
+  cursor: pointer;
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease,
+    border-color var(--db-transition),
+    box-shadow var(--db-transition);
+}
+
+.jb-card:hover {
+  border-color: var(--db-teal);
+  box-shadow: 0 4px 16px rgba(29, 158, 117, 0.10);
+  transform: translateY(-2px) !important;
+}
+
+.jb-card-company,
+.jb-card-location {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--db-gray-500);
+}
+
+.jb-card-company svg,
+.jb-card-location svg {
+  width: 12px;
+  height: 12px;
+  stroke: var(--db-gray-500);
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+}
+
+/* Badge qualification */
+.jb-badge-quali {
+  background: #e6f1fb;
+  color: #185fa5;
+  border-color: #b8d4f0;
+}
+
+/* Badge type d'offre (CDI / CDD / Stage…) */
+.jb-badge-type {
+  background: #eaf3de;
+  color: #3b6d11;
+  border-color: #c0dd97;
+}
+
+.jb-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.jb-card-deadline {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: #854f0b;
+  background: #faeeda;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.jb-card-deadline svg {
+  width: 11px;
+  height: 11px;
+  stroke: #854f0b;
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.jb-card-view {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--db-teal);
+  opacity: 0;
+  transition: opacity var(--db-transition);
+  margin-top: 6px;
+}
+
+.jb-card:hover .jb-card-view {
+  opacity: 1;
+}
+
+.jb-card-view svg {
+  width: 12px;
+  height: 12px;
+  stroke: var(--db-teal);
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ── Vue liste ── */
+.jb-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.jb-list-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--db-white);
+  border: 1px solid var(--db-gray-200);
+  border-radius: var(--db-radius-md);
+  padding: 14px 18px;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease,
+    border-color var(--db-transition),
+    box-shadow var(--db-transition);
+}
+
+.jb-list-row--visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.jb-list-row:hover {
+  border-color: var(--db-teal);
+  box-shadow: 0 2px 10px rgba(29, 158, 117, 0.08);
+}
+
+.jb-list-ico {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--db-radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.jb-list-ico svg {
+  width: 18px;
+  height: 18px;
+}
+
+.jb-list-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.jb-list-titre {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--db-gray-900);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.jb-list-sub {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: var(--db-gray-500);
+  flex-wrap: wrap;
+}
+
+.jb-list-sub svg {
+  width: 11px;
+  height: 11px;
+  stroke: var(--db-gray-500);
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+}
+
+.jb-list-dot {
+  color: var(--db-gray-200);
+}
+
+.jb-list-badges {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.jb-list-date {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--db-gray-500);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.jb-list-date svg {
+  width: 11px;
+  height: 11px;
+  stroke: var(--db-gray-500);
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.jb-list-arrow {
+  display: flex;
+  align-items: center;
+  color: var(--db-gray-500);
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity var(--db-transition);
+}
+
+.jb-list-arrow svg {
+  width: 15px;
+  height: 15px;
+  stroke: var(--db-teal);
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.jb-list-row:hover .jb-list-arrow {
+  opacity: 1;
+}
+
+/* ── Modal ── */
+.jb-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 37, 64, 0.45);
+  backdrop-filter: blur(3px);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: jb-overlay-in 0.2s ease;
+}
+
+@keyframes jb-overlay-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.jb-modal {
+  background: var(--db-white);
+  border-radius: var(--db-radius-lg);
+  padding: 28px;
+  width: 100%;
+  max-width: 480px;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(10, 37, 64, 0.18);
+  animation: jb-modal-in 0.25s ease;
+}
+
+@keyframes jb-modal-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.jb-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: var(--db-gray-100);
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background var(--db-transition);
+}
+
+.jb-modal-close:hover { background: var(--db-gray-200); }
+
+.jb-modal-close svg {
+  width: 14px;
+  height: 14px;
+  stroke: var(--db-gray-900);
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.jb-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.jb-modal-ico {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--db-radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.jb-modal-ico svg {
+  width: 24px;
+  height: 24px;
+}
+
+.jb-modal-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--db-gray-900);
+  margin: 0 0 3px;
+  line-height: 1.3;
+}
+
+.jb-modal-company {
+  font-size: 13px;
+  color: var(--db-gray-500);
+  margin: 0;
+}
+
+.jb-modal-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--db-gray-100);
+}
+
+.jb-modal-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: var(--db-gray-500);
+}
+
+.jb-modal-meta-item svg {
+  width: 13px;
+  height: 13px;
+  stroke: var(--db-gray-500);
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.jb-modal-meta-item--deadline {
+  background: #faeeda;
+  color: #854f0b;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.jb-modal-meta-item--deadline svg {
+  stroke: #854f0b;
+}
+
+/* Type d'offre dans le modal */
+.jb-modal-meta-item--type {
+  background: #eaf3de;
+  color: #3b6d11;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.jb-modal-meta-item--type svg {
+  stroke: #3b6d11;
+}
+
+/* Tags modal */
+.jb-modal-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.jb-modal-tag {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--db-gray-700, #374151);
+  background: var(--db-gray-100);
+  border: 1px solid var(--db-gray-200);
+  padding: 5px 12px;
+  border-radius: 20px;
+}
+
+.jb-modal-tag svg {
+  width: 12px;
+  height: 12px;
+  stroke: var(--db-gray-500);
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Partage modal */
+.jb-modal-share {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding: 14px 16px;
+  background: var(--db-gray-100);
+  border-radius: var(--db-radius-md);
+}
+
+.jb-modal-share-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--db-gray-500);
+  flex: 1;
+}
+
+.jb-modal-share-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.2s, filter 0.2s;
+  flex-shrink: 0;
+}
+
+.jb-modal-share-btn:hover { transform: translateY(-2px); filter: brightness(0.9); }
+
+.jb-modal-share-btn svg {
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.jb-modal-share-btn--linkedin { background: #0077B5; }
+.jb-modal-share-btn--linkedin svg { stroke: #fff; }
+
+.jb-modal-share-btn--whatsapp { background: #25D366; }
+.jb-modal-share-btn--whatsapp svg { stroke: #fff; }
+
+.jb-modal-share-btn--copy { background: #6C757D; }
+.jb-modal-share-btn--copy svg { stroke: #fff; }
+
+/* Footer modal */
+.jb-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.jb-modal-btn {
+  padding: 9px 22px;
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--db-transition);
+  font-family: inherit;
+}
+
+.jb-modal-btn--secondary {
+  border: 1.5px solid var(--db-gray-200);
+  background: var(--db-white);
+  color: var(--db-gray-900);
+}
+
+.jb-modal-btn--secondary:hover {
+  border-color: var(--db-teal);
+  color: var(--db-teal-dark);
+  background: var(--db-teal-light);
+}
+
+.jb-modal-btn--primary {
+  border: 1.5px solid var(--db-teal);
+  background: var(--db-teal);
+  color: #fff;
+}
+
+.jb-modal-btn--primary:hover {
+  background: var(--db-teal-dark);
+  border-color: var(--db-teal-dark);
+}
+
+/* ── SweetAlert2 — toast personnalisé ── */
+.swal2-container.swal2-bottom-end {
+  z-index: 99999 !important;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1200px) {
+  .jb-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .jb-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .jb-toolbar        { gap: 8px; }
+  .jb-filter-select  { font-size: 12px; }
+  .jb-list-badges    { display: none; }
+  .jb-list-date      { display: none; }
+  .jb-modal          { padding: 20px; }
+  .jb-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .jb-search-wrapper { min-width: 100%; order: -1; }
+  .jb-modal-footer   { flex-direction: column; }
+  .jb-modal-btn      { width: 100%; text-align: center; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   AJOUTS jobsAuth.css — Compatibilité IA + bandeau info
+   À coller à la fin de ton jobsAuth.css existant
+═══════════════════════════════════════════════════════════════════ */
+
+/* ── Bandeau info IA ── */
+.jb-ia-banner {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: #f5f3ff;
+  border: 1px solid #e0d9ff;
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-size: 13px;
+  color: #5b21b6;
+  margin-bottom: 16px;
+}
+
+.jb-ia-banner svg {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  stroke: #7c3aed;
+}
+
+.jb-ia-banner strong {
+  font-weight: 700;
+}
+
+/* ── Zone compat dans la carte grille ── */
+.jb-card-compat {
+  margin-top: 10px;
+  margin-bottom: 2px;
+}
+
+/* ── Zone compat dans la vue liste ── */
+.jb-list-compat {
+  flex-shrink: 0;
+  margin-left: auto;
+  margin-right: 10px;
+}
+
+/* ── Zone compat dans la modal ── */
+.jb-modal-compat {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 12px 0 4px;
+  padding: 10px 14px;
+  background: #faf9ff;
+  border: 1px solid #ede9fe;
+  border-radius: 10px;
+}
+
+.jb-modal-compat-label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #7c3aed;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.jb-modal-compat-label svg {
+  width: 14px;
+  height: 14px;
+  stroke: #7c3aed;
+}
+
+/* ── Spinner chargement offres ── */
+.db-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 48px 0;
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   COMPATIBILITY BADGE — Mistral AI  (copié depuis compatibility-badge.css)
+════════════════════════════════════════════════════════════════ */
+
+.jb-compat-loading {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: #94a3b8;
+  margin-top: 4px;
+}
+
+.jb-compat-spinner {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 2px solid #e2e8f0;
+  border-top-color: #7c3aed;
+  border-radius: 50%;
+  animation: jb-spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes jb-spin {
+  to { transform: rotate(360deg); }
+}
+
+.jb-compat-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.jb-compat-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px 4px 7px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: default;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  white-space: nowrap;
+}
+
+.jb-compat-badge:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.jb-compat-score {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.jb-compat-label {
+  font-size: 11px;
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+/* APRÈS */
+.jb-compat-tooltip {
+  position: fixed;
+  z-index: 9999;
+  background: #1e293b;
+  color: #f1f5f9;
+  border-radius: 10px;
+  padding: 12px 14px;
+  width: 260px;          /* largeur par défaut, écrasée par le JS sur mobile */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  font-size: 12px;
+  line-height: 1.5;
+  pointer-events: none;
+  animation: jb-tooltip-in 0.15s ease;
+ 
+  /* ── CLÉS : scrollable si le contenu dépasse l'espace dispo ── */
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+ 
+  /* scrollbar discrète */
+  scrollbar-width: thin;
+  scrollbar-color: #475569 transparent;
+}
+ 
+.jb-compat-tooltip::-webkit-scrollbar        { width: 4px; }
+.jb-compat-tooltip::-webkit-scrollbar-track  { background: transparent; }
+.jb-compat-tooltip::-webkit-scrollbar-thumb  { background: #475569; border-radius: 4px; }
+ 
+@keyframes jb-tooltip-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+ 
+
+@keyframes jb-tooltip-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.jb-compat-tooltip-resume {
+  margin: 0 0 10px;
+  color: #cbd5e1;
+  font-style: italic;
+  font-size: 11px;
+  line-height: 1.4;
+  border-bottom: 1px solid #334155;
+  padding-bottom: 8px;
+}
+
+.jb-compat-tooltip-section {
+  margin-top: 8px;
+}
+
+.jb-compat-tooltip-title {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+.jb-compat-tooltip-title--ok   { color: #4ade80; }
+.jb-compat-tooltip-title--warn { color: #fbbf24; }
+
+.jb-compat-tooltip-section ul {
+  margin: 0;
+  padding-left: 14px;
+  color: #e2e8f0;
+}
+
+.jb-compat-tooltip-section ul li {
+  margin-bottom: 3px;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.jb-compat-compact {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+

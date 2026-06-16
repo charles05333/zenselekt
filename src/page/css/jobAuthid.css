@@ -1,0 +1,787 @@
+/* =====================================================
+   jobid.css — préfixe "jbid-"
+   Cohérent avec jobsAuth.css (db- / jb-)
+   ===================================================== */
+
+/* ── Page shell ─────────────────────────────────────── */
+.jbid-page {
+  background: var(--db-gray-100, #F8F9FA);
+  min-height: 100vh;
+  font-family: inherit;
+  color: var(--db-gray-900, #111827);
+  line-height: 1.6;
+}
+
+/* ── Top bar ─────────────────────────────────────────── */
+.jbid-topbar {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 58px;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--db-gray-200, #e5e7eb);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+}
+
+.jbid-topbar-back {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--db-gray-900, #111827);
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: var(--db-radius-sm, 6px);
+  border: 1.5px solid var(--db-gray-200, #e5e7eb);
+  background: var(--db-white, #fff);
+  transition: border-color var(--db-transition, 0.18s ease),
+              color var(--db-transition, 0.18s ease);
+}
+
+.jbid-topbar-back:hover {
+  border-color: var(--db-teal, #1d9e75);
+  color: var(--db-teal-dark, #0f6e56);
+}
+
+.jbid-topbar-logo {
+  height: 36px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* ── Container ───────────────────────────────────────── */
+.jbid-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 74px 28px 40px;
+}
+
+/* ── Layout deux colonnes ────────────────────────────── */
+.jbid-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 24px;
+  align-items: start;
+}
+
+/* ── Colonne gauche ──────────────────────────────────── */
+.jbid-left {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ── Card offre — identique à db-card / jb-card ─────── */
+.jbid-job-card {
+  background: var(--db-white, #fff);
+  border: 1px solid var(--db-gray-200, #e5e7eb);
+  border-radius: var(--db-radius-md, 12px);
+  padding: 20px;
+  transition: border-color var(--db-transition, 0.18s ease),
+              box-shadow var(--db-transition, 0.18s ease);
+}
+
+.jbid-job-card:hover {
+  border-color: var(--db-teal, #1d9e75);
+  box-shadow: 0 4px 16px rgba(29, 158, 117, 0.10);
+}
+
+/* Icône colorée */
+.jbid-card-ico {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--db-radius-sm, 8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  flex-shrink: 0;
+}
+
+.jbid-card-ico svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* Titre */
+.jbid-card-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--db-gray-900, #111827);
+  line-height: 1.3;
+  margin-bottom: 8px;
+}
+
+/* Entreprise */
+.jbid-card-company {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--db-gray-500, #6b7280);
+  margin-bottom: 12px;
+}
+
+.jbid-card-company svg {
+  width: 13px;
+  height: 13px;
+  stroke: var(--db-gray-500, #6b7280);
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+}
+
+/* Badges — reprend exactement db-badge, db-badge--co, jb-badge-type, jb-badge-quali */
+.jbid-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.jbid-card-meta .db-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 8px;
+  border-radius: 20px;
+  border: 1px solid transparent;
+}
+
+.jbid-card-meta .db-badge svg {
+  width: 11px;
+  height: 11px;
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+}
+
+/* Reprend les couleurs de jobsAuth */
+.jbid-card-meta .jb-badge-type {
+  background: #eaf3de;
+  color: #3b6d11;
+  border-color: #c0dd97;
+}
+.jbid-card-meta .jb-badge-type svg { stroke: #3b6d11; }
+
+.jbid-card-meta .db-badge--co {
+  background: #e6f1fb;
+  color: #185fa5;
+  border-color: #b8d4f0;
+}
+.jbid-card-meta .db-badge--co svg { stroke: #185fa5; }
+
+.jbid-card-meta .jb-badge-quali {
+  background: #eeedfe;
+  color: #534ab7;
+  border-color: #afa9ec;
+}
+.jbid-card-meta .jb-badge-quali svg { stroke: #534ab7; }
+
+/* Footer card */
+.jbid-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding-top: 10px;
+  border-top: 0.5px solid var(--db-gray-200, #e5e7eb);
+  margin-bottom: 12px;
+}
+
+.jbid-card-date {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--db-gray-500, #6b7280);
+}
+
+.jbid-card-date svg {
+  width: 12px;
+  height: 12px;
+  stroke: var(--db-gray-500, #6b7280);
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.jbid-card-deadline {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: #854f0b;
+  background: #faeeda;
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.jbid-card-deadline svg {
+  width: 11px;
+  height: 11px;
+  stroke: #854f0b;
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Alerte offre expirée */
+.jbid-expired-alert {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #fcebeb;
+  color: #a32d2d;
+  border: 1px solid #f09595;
+  border-radius: var(--db-radius-sm, 8px);
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.jbid-expired-alert svg {
+  width: 14px;
+  height: 14px;
+  stroke: #a32d2d;
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+}
+
+/* ── Partage intégré dans la card ────────────────────── */
+.jbid-share-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  background: var(--db-gray-100, #f3f4f6);
+  border-radius: var(--db-radius-sm, 8px);
+}
+
+.jbid-share-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--db-gray-500, #6b7280);
+  flex: 1;
+}
+
+.jbid-share-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.2s, filter 0.2s;
+  flex-shrink: 0;
+}
+
+.jbid-share-btn svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.jbid-share-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(0.9);
+}
+
+.jbid-share-btn--linkedin { background: #0077B5; }
+.jbid-share-btn--whatsapp { background: #25D366; }
+.jbid-share-btn--copy     { background: #6C757D; }
+
+/* ── Sections Description / Profil ──────────────────── */
+.jbid-section {
+  background: var(--db-white, #fff);
+  border: 1px solid var(--db-gray-200, #e5e7eb);
+  border-radius: var(--db-radius-md, 12px);
+  padding: 20px;
+}
+
+.jbid-section-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--db-gray-500, #6b7280);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--db-gray-100, #f3f4f6);
+}
+
+.jbid-section-title svg {
+  width: 14px;
+  height: 14px;
+  stroke: var(--db-teal, #1d9e75);
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+}
+
+.jbid-section-content {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--db-gray-900, #111827);
+}
+
+.jbid-section-content p {
+  margin-bottom: 10px;
+}
+
+.jbid-section-content ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.jbid-section-content li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--db-gray-100, #f9fafb);
+  border-radius: var(--db-radius-sm, 6px);
+  font-size: 13px;
+  color: var(--db-gray-900, #111827);
+}
+
+.jbid-section-content li::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--db-teal, #1d9e75);
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+
+/* ── Sidebar ─────────────────────────────────────────── */
+.jbid-sidebar {
+  position: sticky;
+  top: 74px;
+}
+
+.jbid-sidebar-card {
+  background: var(--db-white, #fff);
+  border: 1px solid var(--db-gray-200, #e5e7eb);
+  border-radius: var(--db-radius-md, 12px);
+}
+
+/* Bannière deadline */
+.jbid-deadline-banner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 14px 16px;
+  background: #faeeda;
+   border-radius: var(--db-radius-md, 12px) var(--db-radius-md, 12px) 0 0; /* ← AJOUTER */
+}
+
+.jbid-deadline-banner svg {
+  width: 14px;
+  height: 14px;
+  stroke: #854f0b;
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  margin-bottom: 2px;
+}
+
+.jbid-deadline-banner--expired {
+  background: #fcebeb;
+}
+
+.jbid-deadline-banner--expired svg {
+  stroke: #a32d2d;
+}
+
+.jbid-deadline-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: #854f0b;
+}
+
+.jbid-deadline-banner--expired .jbid-deadline-label {
+  color: #a32d2d;
+}
+
+.jbid-deadline-date {
+  font-size: 14px;
+  font-weight: 700;
+  color: #854f0b;
+}
+
+.jbid-deadline-banner--expired .jbid-deadline-date {
+  color: #a32d2d;
+}
+
+/* Bouton postuler */
+.jbid-apply-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+    margin: 14px;
+  width: calc(100% - 28px);   /* ← AJOUTER */
+  box-sizing: border-box;      /* ← AJOUTER */
+  padding: 10px 18px;
+  background: var(--db-teal, #1d9e75);
+  border: 1.5px solid var(--db-teal, #1d9e75);
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: inherit;
+  transition: background var(--db-transition, 0.18s ease),
+              border-color var(--db-transition, 0.18s ease),
+              transform 0.2s;
+}
+
+.jbid-apply-btn svg {
+  width: 13px;
+  height: 13px;
+  stroke: #fff;
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.jbid-apply-btn:hover {
+  background: var(--db-teal-dark, #0f6e56);
+  border-color: var(--db-teal-dark, #0f6e56);
+  transform: translateY(-1px);
+  color: #fff;
+}
+
+.jbid-apply-btn--disabled {
+  background: var(--db-gray-200, #e5e7eb);
+  border-color: var(--db-gray-200, #e5e7eb);
+  color: var(--db-gray-500, #6b7280);
+  cursor: not-allowed;
+}
+
+.jbid-apply-btn--disabled:hover {
+  background: var(--db-gray-200, #e5e7eb);
+  border-color: var(--db-gray-200, #e5e7eb);
+  transform: none;
+  color: var(--db-gray-500, #6b7280);
+}
+
+.jbid-apply-btn--disabled svg {
+  stroke: var(--db-gray-500, #6b7280);
+}
+
+/* Grille d'infos */
+.jbid-info {
+  padding: 0 16px 16px;
+}
+
+.jbid-info-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--db-gray-500, #6b7280);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 10px;
+}
+
+.jbid-info-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.jbid-info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 10px 0;
+  border-top: 0.5px solid var(--db-gray-200, #e5e7eb);
+}
+
+.jbid-info-item-label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--db-gray-500, #6b7280);
+}
+
+.jbid-info-item-label svg {
+  width: 11px;
+  height: 11px;
+  stroke: var(--db-teal, #1d9e75);
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+}
+
+.jbid-info-item-value {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--db-gray-900, #111827);
+}
+
+/* ── Skeleton loading ────────────────────────────────── */
+.jbid-skeleton {
+  background: var(--db-white, #fff);
+  border: 1px solid var(--db-gray-200, #e5e7eb);
+  border-radius: var(--db-radius-md, 12px);
+  padding: 24px;
+  animation: jbid-pulse 1.4s ease-in-out infinite;
+}
+
+.jbid-skeleton__title {
+  height: 24px;
+  background: var(--db-gray-200, #e5e7eb);
+  border-radius: 6px;
+  margin-bottom: 16px;
+  width: 60%;
+}
+
+.jbid-skeleton__line {
+  height: 14px;
+  background: var(--db-gray-200, #e5e7eb);
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.jbid-skeleton__line--short {
+  width: 40%;
+}
+
+@keyframes jbid-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.45; }
+}
+
+/* ── État erreur ─────────────────────────────────────── */
+.jbid-error {
+  background: var(--db-white, #fff);
+  border: 1px solid var(--db-gray-200, #e5e7eb);
+  border-radius: var(--db-radius-md, 12px);
+  padding: 48px 32px;
+  text-align: center;
+  max-width: 440px;
+  margin: 32px auto;
+}
+
+.jbid-error-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #fcebeb;
+  margin: 0 auto 16px;
+}
+
+.jbid-error-icon svg {
+  width: 22px;
+  height: 22px;
+  stroke: #a32d2d;
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.jbid-error h2 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--db-gray-900, #111827);
+  margin-bottom: 8px;
+}
+
+.jbid-error p {
+  font-size: 13px;
+  color: var(--db-gray-500, #6b7280);
+  margin-bottom: 20px;
+}
+
+.jbid-error-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--db-teal, #1d9e75);
+  text-decoration: none;
+  padding: 8px 18px;
+  border: 1.5px solid var(--db-teal, #1d9e75);
+  border-radius: 50px;
+  transition: background var(--db-transition, 0.18s ease),
+              color var(--db-transition, 0.18s ease);
+}
+
+.jbid-error-back:hover {
+  background: var(--db-teal-light, #e1f5ee);
+  color: var(--db-teal-dark, #0f6e56);
+}
+
+/* ── Back to top ─────────────────────────────────────── */
+.jbid-back-to-top {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--db-teal, #1d9e75);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity 0.3s, visibility 0.3s, transform 0.3s,
+              background var(--db-transition, 0.18s ease);
+  z-index: 99;
+}
+
+.jbid-back-to-top svg {
+  width: 16px;
+  height: 16px;
+  stroke: #fff;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.jbid-back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.jbid-back-to-top:hover {
+  background: var(--db-teal-dark, #0f6e56);
+  transform: translateY(-2px);
+}
+
+/* ── Toast — apparaît en HAUT à droite ───────────────── */
+.jbid-toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: var(--db-teal, #1d9e75);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: var(--db-radius-sm, 8px);
+  font-size: 13px;
+  font-weight: 600;
+  z-index: 9999;
+  transform: translateX(140%);
+  transition: transform 0.3s ease;
+  box-shadow: 0 4px 12px rgba(29, 158, 117, 0.25);
+}
+
+.jbid-toast.show {
+  transform: translateX(0);
+}
+
+/* ── Responsive ──────────────────────────────────────── */
+@media (max-width: 960px) {
+  .jbid-layout {
+    grid-template-columns: 1fr;
+  }
+  .jbid-sidebar {
+    position: static;
+  }
+}
+
+@media (max-width: 640px) {
+  .jbid-container {
+    padding: 68px 14px 32px;
+  }
+  .jbid-job-card {
+    padding: 16px;
+  }
+  .jbid-section {
+    padding: 16px;
+  }
+  .jbid-card-title {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .jbid-topbar {
+    padding: 0 14px;
+  }
+  .jbid-card-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .jbid-apply-btn {
+    margin: 12px;
+  }
+}
+
+.jbid-already-applied {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  padding: 12px 20px;
+  border-radius: 8px;
+  background: #e6f4f1;
+  color: #0d6e5e;
+  font-weight: 500;
+  font-size: 15px;
+  border: 1.5px solid #0d6e5e33;
+}
+
+.jbid-already-applied svg {
+  width: 18px;
+  height: 18px;
+  stroke: #0d6e5e;
+  flex-shrink: 0;
+}

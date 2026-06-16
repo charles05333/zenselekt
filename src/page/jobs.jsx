@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import "./css/jobs.css";
 import zenImg from "../assets/img/zen.png";
 
+// ─── API ──────────────────────────────────────────────────────────────────────
+const API_BASE = import.meta.env.VITE_API_BASE || '';
+
 // ─── Constants ────────────────────────────────────────────────────────────────
 const EXPERIENCE_OPTIONS = [
   { value: "Aucune", label: "Débutant - Aucune expérience" },
@@ -37,22 +40,16 @@ const GENRE_OPTIONS = [
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 function timeAgo(dateStr) {
-  const pub = new Date(dateStr);
-  const now = new Date();
-  const diffDays = Math.floor((now - pub) / (1000 * 60 * 60 * 24));
+  const diffDays  = Math.floor((new Date() - new Date(dateStr)) / (1000 * 60 * 60 * 24));
   const diffWeeks = Math.floor(diffDays / 7);
-  if (diffWeeks > 0)
-    return diffWeeks === 1 ? "Il y a 1 semaine" : `Il y a ${diffWeeks} semaines`;
-  if (diffDays > 0)
-    return diffDays === 1 ? "Il y a 1 jour" : `Il y a ${diffDays} jours`;
+  if (diffWeeks > 0) return diffWeeks === 1 ? "Il y a 1 semaine" : `Il y a ${diffWeeks} semaines`;
+  if (diffDays  > 0) return diffDays  === 1 ? "Il y a 1 jour"    : `Il y a ${diffDays} jours`;
   return "Aujourd'hui";
 }
 
 function formatDateFR(dateStr) {
   return new Date(dateStr).toLocaleDateString("fr-FR", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
+    day: "numeric", month: "long", year: "numeric",
   });
 }
 
@@ -64,10 +61,7 @@ function showToast(message) {
   toast.textContent = message;
   document.body.appendChild(toast);
   setTimeout(() => toast.classList.add("show"), 100);
-  setTimeout(() => {
-    toast.classList.remove("show");
-    setTimeout(() => toast.remove(), 300);
-  }, 3000);
+  setTimeout(() => { toast.classList.remove("show"); setTimeout(() => toast.remove(), 300); }, 3000);
 }
 
 async function copyToClipboard(url) {
@@ -83,12 +77,9 @@ async function copyToClipboard(url) {
 function JobCard({ job, index }) {
   const navigate = useNavigate();
 
-  // URL canonique pour le partage (lien public)
   const offreUrl    = `https://app.zenselekt.com/jobs/${job.id}`;
   const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(offreUrl)}`;
-  const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(
-    "Découvrez cette offre d'emploi : " + job.titre + " - " + offreUrl
-  )}`;
+  const whatsappUrl = `https://wa.me/?text=${encodeURIComponent("Découvrez cette offre d'emploi : " + job.titre + " - " + offreUrl)}`;
 
   const handleCardClick = (e) => {
     if (e.target.closest(".jb-card__share")) return;
@@ -113,7 +104,7 @@ function JobCard({ job, index }) {
           </a>
           {job.entreprise && (
             <p className="jb-card__company">
-              <i className="fas fa-building" aria-hidden="true" /> {job.entreprise}
+              {job.entreprise}
             </p>
           )}
         </div>
@@ -128,48 +119,35 @@ function JobCard({ job, index }) {
         </span>
         {job.exp && (
           <span className="jb-tag">
-            <i className="fas fa-user-tie" aria-hidden="true" /> {job.exp}
+            {job.exp}
           </span>
         )}
         {job.quali && (
           <span className="jb-tag">
-            <i className="fas fa-graduation-cap" aria-hidden="true" /> {job.quali}
+            {job.quali}
           </span>
         )}
         {job.genre && job.genre !== "Homme/Femme" && (
           <span className="jb-tag">
-            <i className="fas fa-venus-mars" aria-hidden="true" /> {job.genre}
+            {job.genre}
           </span>
         )}
       </div>
 
       <div className="jb-card__share">
         <span className="jb-share-label">Partager :</span>
-        <a
-          href={linkedinUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="jb-share-btn jb-share-btn--linkedin"
-          title="Partager sur LinkedIn"
-          onClick={(e) => e.stopPropagation()}
-        >
+        <a href={linkedinUrl} target="_blank" rel="noopener noreferrer"
+           className="jb-share-btn jb-share-btn--linkedin" title="Partager sur LinkedIn"
+           onClick={(e) => e.stopPropagation()}>
           <i className="fab fa-linkedin-in" aria-hidden="true" />
         </a>
-        <a
-          href={whatsappUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="jb-share-btn jb-share-btn--whatsapp"
-          title="Partager sur WhatsApp"
-          onClick={(e) => e.stopPropagation()}
-        >
+        <a href={whatsappUrl} target="_blank" rel="noopener noreferrer"
+           className="jb-share-btn jb-share-btn--whatsapp" title="Partager sur WhatsApp"
+           onClick={(e) => e.stopPropagation()}>
           <i className="fab fa-whatsapp" aria-hidden="true" />
         </a>
-        <button
-          onClick={(e) => { e.stopPropagation(); copyToClipboard(offreUrl); }}
-          className="jb-share-btn jb-share-btn--copy"
-          title="Copier le lien"
-        >
+        <button onClick={(e) => { e.stopPropagation(); copyToClipboard(offreUrl); }}
+                className="jb-share-btn jb-share-btn--copy" title="Copier le lien">
           <i className="fas fa-link" aria-hidden="true" />
         </button>
       </div>
@@ -186,12 +164,8 @@ function FilterSection({ filters, onChange, onSubmit, onReset }) {
           <label className="jb-filter-label" htmlFor="jb-exp">
             <i className="fas fa-user-clock" aria-hidden="true" /> Expérience requise
           </label>
-          <select
-            id="jb-exp"
-            className="jb-select"
-            value={filters.exp}
-            onChange={(e) => onChange("exp", e.target.value)}
-          >
+          <select id="jb-exp" className="jb-select" value={filters.exp}
+                  onChange={(e) => onChange("exp", e.target.value)}>
             <option value="">Toute expérience</option>
             {EXPERIENCE_OPTIONS.map((o) => (
               <option key={o.value} value={o.value}>{o.label}</option>
@@ -203,12 +177,8 @@ function FilterSection({ filters, onChange, onSubmit, onReset }) {
           <label className="jb-filter-label" htmlFor="jb-quali">
             <i className="fas fa-graduation-cap" aria-hidden="true" /> Niveau d'études
           </label>
-          <select
-            id="jb-quali"
-            className="jb-select"
-            value={filters.quali}
-            onChange={(e) => onChange("quali", e.target.value)}
-          >
+          <select id="jb-quali" className="jb-select" value={filters.quali}
+                  onChange={(e) => onChange("quali", e.target.value)}>
             <option value="">Toute qualification</option>
             {QUALIFICATION_OPTIONS.map((o) => (
               <option key={o.value} value={o.value}>{o.label}</option>
@@ -220,12 +190,8 @@ function FilterSection({ filters, onChange, onSubmit, onReset }) {
           <label className="jb-filter-label" htmlFor="jb-genre">
             <i className="fas fa-users" aria-hidden="true" /> Profil recherché
           </label>
-          <select
-            id="jb-genre"
-            className="jb-select"
-            value={filters.genre}
-            onChange={(e) => onChange("genre", e.target.value)}
-          >
+          <select id="jb-genre" className="jb-select" value={filters.genre}
+                  onChange={(e) => onChange("genre", e.target.value)}>
             <option value="">Indifférent</option>
             {GENRE_OPTIONS.map((o) => (
               <option key={o.value} value={o.value}>{o.label}</option>
@@ -254,8 +220,7 @@ export default function Jobs() {
   const [loading, setLoading] = useState(false);
   const [error, setError]     = useState("");
 
-  const handleChange = (key, value) =>
-    setFilters((f) => ({ ...f, [key]: value }));
+  const handleChange = (key, value) => setFilters((f) => ({ ...f, [key]: value }));
 
   const fetchJobs = async (activeFilters) => {
     setLoading(true);
@@ -266,56 +231,25 @@ export default function Jobs() {
       if (activeFilters.quali) params.set("quali",  activeFilters.quali);
       if (activeFilters.genre) params.set("genre",  activeFilters.genre);
 
-      // 🔌 Vrai appel API :
-      // const res = await fetch(`/jobs.php?${params.toString()}`, {
-      //   headers: { "X-Requested-With": "XMLHttpRequest" },
-      //   credentials: "same-origin",
-      // });
-      // if (!res.ok) throw new Error("Erreur serveur");
-      // const data = await res.json();
-      // setJobs(data.jobs || []);
+      const res = await fetch(`${API_BASE}/jobs.php?${params.toString()}`, {
+        headers: { "X-Requested-With": "XMLHttpRequest" },
+        credentials: "same-origin",
+      });
 
-      // Simulation :
-      await new Promise((r) => setTimeout(r, 800));
-      setJobs([
-        {
-          id: 1,
-          titre: "Développeur Full Stack React / Node.js",
-          entreprise: "TechCorp CI",
-          Date_pub: "2025-04-01",
-          Date_lim_can: "2025-06-30",
-          exp: "2ans",
-          quali: "Licence",
-          genre: "Homme/Femme",
-        },
-        {
-          id: 2,
-          titre: "Responsable Ressources Humaines",
-          entreprise: "Groupe Bolloré",
-          Date_pub: "2025-03-20",
-          Date_lim_can: "2026-08-31",
-          exp: "5ans",
-          quali: "Master",
-          genre: "femme",
-        },
-        {
-          id: 3,
-          titre: "Comptable Senior",
-          entreprise: "Cabinet Expertise",
-          Date_pub: "2025-04-10",
-          Date_lim_can: "2025-07-15",
-          exp: "3ans",
-          quali: "Licence",
-          genre: "Homme/Femme",
-        },
-      ]);
-    } catch {
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+
+      if (!data.success) throw new Error(data.message || "Erreur API");
+      setJobs(data.jobs || []);
+    } catch (err) {
+      console.error("[Jobs] fetch error:", err);
       setError("Impossible de charger les offres. Veuillez réessayer.");
     } finally {
       setLoading(false);
     }
   };
 
+  // Chargement initial + à chaque changement de filtres appliqués
   useEffect(() => {
     fetchJobs(applied);
   }, [applied]);
@@ -371,18 +305,22 @@ export default function Jobs() {
             </p>
           )}
 
-          {!loading && jobs.length === 0 && !error && (
-            <div className="jb-empty">
-              <i className="fas fa-search-minus" aria-hidden="true" />
-              <h3>Aucune offre trouvée</h3>
-              <p>
-                Essayez de modifier vos critères de recherche pour découvrir plus
-                d'opportunités.
-              </p>
+          {loading && (
+            <div className="jb-loading" aria-live="polite">
+              <div className="loader-spinner" />
+              <p>Chargement des offres…</p>
             </div>
           )}
 
-          {jobs.map((job, i) => (
+          {!loading && !error && jobs.length === 0 && (
+            <div className="jb-empty">
+              <i className="fas fa-search-minus" aria-hidden="true" />
+              <h3>Aucune offre trouvée</h3>
+              <p>Essayez de modifier vos critères de recherche pour découvrir plus d'opportunités.</p>
+            </div>
+          )}
+
+          {!loading && jobs.map((job, i) => (
             <JobCard key={job.id} job={job} index={i} />
           ))}
         </section>
